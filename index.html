@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#059669" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>العولة المشتركة - Achat Groupé</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #d1fae5;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 85px; }
+    .container { max-width: 600px; margin: 0 auto; padding: 14px; }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 16px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-top { display: flex; justify-content: space-between; align-items: center; }
+    .header-title { font-size: 1.25rem; font-weight: 800; margin: 0; }
+    .header-sub { font-size: 0.8rem; opacity: 0.9; }
+    .header-actions { display: flex; gap: 8px; }
+    .btn-icon {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-icon:active { transform: scale(0.96); }
+
+    /* Update Banner */
+    #updateBanner {
+      display: none;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #f59e0b;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    /* Cards & UI */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+    }
+    .card-title { font-size: 1.05rem; font-weight: 800; margin: 0 0 12px 0; display: flex; justify-content: space-between; align-items: center; }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stat-box { background: white; padding: 12px 8px; border-radius: 14px; text-align: center; border: 1px solid var(--border); }
+    .stat-val { font-size: 1.05rem; font-weight: 800; color: var(--primary); }
+    .stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    /* Forms */
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      background: #f8fafc;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--primary); background: white; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:active { background: var(--primary-dark); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
+    .btn-sm { padding: 6px 10px; font-size: 0.8rem; width: auto; border-radius: 8px; }
+    .btn-danger { background: #fee2e2; color: var(--danger); }
+    .btn-whatsapp { background: #25D366; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+    /* Badges */
+    .badge { padding: 3px 8px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+
+    /* Bottom Navigation */
+    nav.bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 4px;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 60;
+    }
+    .nav-item {
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      flex: 1;
+    }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 1.25rem; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Item list */
+    .item-row {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+    .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .item-name { font-weight: 800; font-size: 0.98rem; }
+    .item-meta { font-size: 0.8rem; color: var(--muted); }
+    .surplus-bar {
+      background: #fef3c7;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #92400e;
+      font-weight: 700;
+    }
+
+    /* Login Screen */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #059669 0%, #064e3b 100%);
+    }
+    .login-box {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 24px;
+      padding: 26px 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    .quick-pins { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .pin-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN VIEW -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div style="text-align:center; margin-bottom: 18px;">
+      <div style="font-size: 2.5rem;">🛒</div>
+      <h1 style="margin:6px 0 2px; font-size:1.4rem; color:#064e3b;">العولة المشتركة</h1>
+      <p style="margin:0; color:#64748b; font-size:0.85rem;">إدارة الشراء بالجملة وتقسيم الحصص للعائلات</p>
+    </div>
+
+    <label style="font-size:0.85rem; font-weight:700;">اختر العضو:</label>
+    <select id="loginMemberSelect"></select>
+
+    <label style="font-size:0.85rem; font-weight:700;">كلمة المرور (PIN):</label>
+    <input type="password" id="loginPinInput" placeholder="أدخل الرمز السري..." inputmode="numeric" />
+
+    <button class="btn btn-primary" onclick="handleLogin()">دخول للتطبيق</button>
+    <p id="loginError" style="color:#ef4444; font-size:0.82rem; text-align:center; margin-top:8px; display:none;">كلمة المرور غير صحيحة!</p>
+
+    <div style="margin-top:16px; padding-top:12px; border-top:1px dashed #e2e8f0;">
+      <div style="font-size:0.75rem; color:#64748b; margin-bottom:6px;">دخول تجريبي سريع (اضغط للتعبئة):</div>
+      <div class="quick-pins" id="quickPinsContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP VIEW -->
+<div id="appScreen" style="display:none;">
+  <header>
+    <div class="header-top">
+      <div>
+        <h1 class="header-title">🛒 العولة المشتركة</h1>
+        <div class="header-sub" id="currentUserBadge">مرحباً</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" onclick="checkForAppUpdate()" title="تحديث التطبيق">🔄 تحديث</button>
+        <button class="btn-icon" onclick="logout()">🚪 خروج</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Auto-Update Banner -->
+    <div id="updateBanner">
+      <span>✨ يتوفر إصدار جديد من التطبيق!</span>
+      <button class="btn btn-primary btn-sm" onclick="applyUpdate()">تحديث الآن</button>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-val" id="statTotalCost">0 دج</div>
+        <div class="stat-lbl">إجمالي المشتريات</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="statTotalPaid">0 دج</div>
+        <div class="stat-lbl">مجموع المدفوعات</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="statMembersCount">0</div>
+        <div class="stat-lbl">عدد العائلات</div>
+      </div>
+    </div>
+
+    <!-- TAB 1: ITEMS (السلع والفاردو) -->
+    <div id="tab-items" class="tab-content active">
+      <div class="card" id="addItemCard">
+        <div class="card-title">➕ إضافة سلعة بالجملة (فاردو / كرتونة)</div>
+        <input type="text" id="itemName" placeholder="اسم المادة (مثلاً: زيت المائدة 2L، مقارون، سميد...)" />
+        <div class="row-3">
+          <div>
+            <label style="font-size:0.72rem; color:var(--muted);">سعر الفاردو (دج)</label>
+            <input type="number" id="itemPackPrice" placeholder="3600" />
+          </div>
+          <div>
+            <label style="font-size:0.72rem; color:var(--muted);">عدد الوحدات داخله</label>
+            <input type="number" id="itemUnitsPerPack" placeholder="6" />
+          </div>
+          <div>
+            <label style="font-size:0.72rem; color:var(--muted);">اسم الوحدة</label>
+            <input type="text" id="itemUnitName" value="قارورة/علبة" />
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addNewItem()">إضافة وتوزيع الحصص</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📦 قائمة السلع وتوزيع الحصص</span>
+          <span class="badge badge-green" id="itemsCountBadge">0 مواد</span>
+        </div>
+        <div id="itemsListContainer"></div>
+      </div>
+
+      <!-- Shared Expenses -->
+      <div class="card">
+        <div class="card-title">⛽ مصاريف مشتركة (نقل، أكياس تغليف...)</div>
+        <div class="row-2">
+          <input type="text" id="expTitle" placeholder="البيان (مثلاً: بنزين السوق)" />
+          <input type="number" id="expAmount" placeholder="المبلغ (دج)" />
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="addExpense()">+ إضافة مصروف</button>
+        <div id="expensesList" style="margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MEMBERS & TASKS (الأعضاء والمهام) -->
+    <div id="tab-members" class="tab-content">
+      <div class="card" id="addMemberCard">
+        <div class="card-title">👥 إضافة / تعديل عضو</div>
+        <input type="hidden" id="editMemberId" />
+        <div class="row-2">
+          <input type="text" id="memName" placeholder="اسم الصديق" />
+          <input type="text" id="memPin" placeholder="الرمز السري (PIN)" inputmode="numeric" />
+        </div>
+        <div class="row-2">
+          <input type="number" id="memPaid" placeholder="المبلغ المدفوع مقدماً (دج)" />
+          <select id="memRole">
+            <option value="member">عضو مشترك</option>
+            <option value="admin">مسؤول (Admin)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="saveMember()">حفظ بيانات العضو</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💳 الأعضاء والرصيد المالي</div>
+        <div id="membersListContainer"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>🔄 توزيع المهام الشهرية</span>
+          <button class="btn btn-outline btn-sm" onclick="rotateTasks()">تدوير المهام</button>
+        </div>
+        <div id="tasksContainer"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: MARKET MODE (وضع السوق) -->
+    <div id="tab-market" class="tab-content">
+      <div class="card">
+        <div class="card-title">
+          <span>🏪 قائمة الشراء في سوق الجملة</span>
+          <span class="badge badge-amber" id="marketProgressBadge">0%</span>
+        </div>
+        <p style="font-size:0.82rem; color:var(--muted); margin-top:0;">أشّر على الفاردوات والكراتين التي تم شراؤها فعلياً في السوق:</p>
+        <div id="marketChecklistContainer"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: DISTRIBUTION & WHATSAPP (الفرز والواتساب) -->
+    <div id="tab-reports" class="tab-content">
+      <div class="card">
+        <div class="card-title">📲 التقرير العام للمجموعة</div>
+        <button class="btn btn-whatsapp" onclick="copyGroupWhatsApp()">📋 نسخ التقرير العام لإرساله في واتساب</button>
+      </div>
+
+      <div id="individualCardsContainer"></div>
+
+      <div class="card">
+        <div class="card-title">⚙️ إدارة البيانات والنسخ الاحتياطي</div>
+        <div class="row-2">
+          <button class="btn btn-outline btn-sm" onclick="exportData()">⬇️ تصدير نسخة (JSON)</button>
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">⬆️ استيراد نسخة</button>
+          <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
+        </div>
+        <button class="btn btn-danger btn-sm" style="margin-top:10px; width:100%;" onclick="resetMonth()">🗑️ تصفير المشتريات لبدء شهر جديد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchTab('items', this)">
+      <span class="nav-icon">📦</span>
+      <span>السلع</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('members', this)">
+      <span class="nav-icon">👥</span>
+      <span>الأعضاء</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('market', this)">
+      <span class="nav-icon">🏪</span>
+      <span>السوق</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('reports', this)">
+      <span class="nav-icon">🧾</span>
+      <span>الفرز وواتساب</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+  // --- SERVICE WORKER & AUTO UPDATE ---
+  let newWorker;
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
+          newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              document.getElementById('updateBanner').style.display = 'flex';
+            }
+          });
+        });
+      }).catch(err => console.log('SW registration note:', err));
+    });
+  }
+
+  function checkForAppUpdate() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg) {
+          reg.update().then(() => {
+            alert('تم فحص التحديثات! إذا توفر إصدار جديد سيظهر شريط التحديث في الأعلى دون مسح بياناتكم.');
+          });
+        } else {
+          location.reload();
+        }
+      });
+    } else {
+      location.reload();
+    }
+  }
+
+  function applyUpdate() {
+    if (newWorker) {
+      newWorker.postMessage({ type: 'SKIP_WAITING' });
+    }
+    window.location.reload();
+  }
+
+  // --- STATE MANAGEMENT ---
+  const STORAGE_KEY = 'aloula_group_v1';
+  const defaultState = {
+    members: [
+      { id: 'm1', name: 'يونس (المسؤول)', pin: '1234', paid: 10000, role: 'admin' },
+      { id: 'm2', name: 'حمزة', pin: '1111', paid: 8000, role: 'member' },
+      { id: 'm3', name: 'كريم', pin: '2222', paid: 8000, role: 'member' },
+      { id: 'm4', name: 'سفيان', pin: '3333', paid: 5000, role: 'member' }
+    ],
+    items: [
+      {
+        id: 'i1',
+        name: 'زيت المائدة 2 لتر',
+        packPrice: 3600,
+        unitsPerPack: 6,
+        unitName: 'قارورة 2L',
+        bought: false,
+        allocations: { m1: 2, m2: 2, m3: 1, m4: 1 }
+      },
+      {
+        id: 'i2',
+        name: 'مقارون (علب 500غ)',
+        packPrice: 600,
+        unitsPerPack: 6,
+        unitName: 'باطة',
+        bought: true,
+        allocations: { m1: 2, m2: 1, m3: 1, m4: 1 } // 5 taken -> 1 surplus!
+      },
+      {
+        id: 'i3',
+        name: 'سميد رفيع (كيس 25 كغ)',
+        packPrice: 1000,
+        unitsPerPack: 5,
+        unitName: 'حصة 5 كغ',
+        bought: false,
+        allocations: { m1: 1, m2: 1, m3: 1, m4: 1 } // 4 taken -> 1 surplus!
+      }
+    ],
+    expenses: [
+      { id: 'e1', title: 'وقود التنقل لسوق الجملة', amount: 800 }
+    ],
+    taskOffset: 0
+  };
+
+  let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultState;
+  let currentUser = null;
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    renderAll();
+  }
+
+  // --- AUTH ---
+  function initLogin() {
+    const sel = document.getElementById('loginMemberSelect');
+    const chips = document.getElementById('quickPinsContainer');
+    sel.innerHTML = '';
+    chips.innerHTML = '';
+    state.members.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      opt.textContent = `${m.name} (${m.role === 'admin' ? 'مسؤول' : 'عضو'})`;
+      sel.appendChild(opt);
+
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'pin-chip';
+      chip.textContent = `${m.name.split(' ')[0]}: ${m.pin}`;
+      chip.onclick = () => {
+        sel.value = m.id;
+        document.getElementById('loginPinInput').value = m.pin;
+      };
+      chips.appendChild(chip);
+    });
+  }
+
+  function handleLogin() {
+    const id = document.getElementById('loginMemberSelect').value;
+    const pin = document.getElementById('loginPinInput').value.trim();
+    const member = state.members.find(m => m.id === id);
+    if (member && member.pin === pin) {
+      currentUser = member;
+      document.getElementById('loginError').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appScreen').style.display = 'block';
+      document.getElementById('currentUserBadge').textContent = `👤 ${member.name} • ${member.role === 'admin' ? 'صلاحية المسؤول' : 'عضو'}`;
+      renderAll();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    currentUser = null;
+    document.getElementById('loginPinInput').value = '';
+    document.getElementById('appScreen').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    initLogin();
+  }
+
+  // --- NAVIGATION ---
+  function switchTab(tabName, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // --- CALCULATIONS ---
+  function calculateFinancials() {
+    let totalItemsCost = 0;
+    state.items.forEach(item => {
+      const totalUnits = Object.values(item.allocations).reduce((a, b) => a + b, 0);
+      const packsNeeded = Math.ceil(totalUnits / item.unitsPerPack);
+      item._totalUnits = totalUnits;
+      item._packsNeeded = packsNeeded;
+      item._totalBoughtUnits = packsNeeded * item.unitsPerPack;
+      item._surplus = item._totalBoughtUnits - totalUnits;
+      item._unitPrice = item.packPrice / item.unitsPerPack;
+      item._totalCost = packsNeeded * item.packPrice;
+      totalItemsCost += item._totalCost;
+    });
+
+    const totalExpenses = state.expenses.reduce((sum, e) => sum + Number(e.amount), 0);
+    const grandTotal = totalItemsCost + totalExpenses;
+    const totalPaid = state.members.reduce((sum, m) => sum + Number(m.paid), 0);
+    const expensePerMember = state.members.length > 0 ? totalExpenses / state.members.length : 0;
+
+    const memberSummaries = state.members.map(m => {
+      let itemsShare = 0;
+      let myItems = [];
+      state.items.forEach(item => {
+        const qty = item.allocations[m.id] || 0;
+        if (qty > 0) {
+          const cost = qty * item._unitPrice;
+          itemsShare += cost;
+          myItems.push({ name: item.name, qty, unitName: item.unitName, cost });
+        }
+      });
+      const totalDue = Math.round(itemsShare + expensePerMember);
+      const balance = Math.round(m.paid - totalDue); // positive = يسترجع, negative = يدفع الباقي
+      return { member: m, myItems, expenseShare: Math.round(expensePerMember), totalDue, balance };
+    });
+
+    return { grandTotal, totalPaid, memberSummaries };
+  }
+
+  // --- ITEMS ACTIONS ---
+  function addNewItem() {
+    const name = document.getElementById('itemName').value.trim();
+    const packPrice = parseFloat(document.getElementById('itemPackPrice').value);
+    const unitsPerPack = parseInt(document.getElementById('itemUnitsPerPack').value);
+    const unitName = document.getElementById('itemUnitName').value.trim() || 'وحدة';
+
+    if (!name || isNaN(packPrice) || isNaN(unitsPerPack) || unitsPerPack <= 0) {
+      alert('يرجى إدخال اسم السلعة والسعر وعدد الوحدات بشكل صحيح.');
+      return;
+    }
+
+    const allocations = {};
+    state.members.forEach(m => { allocations[m.id] = 1; }); // Default 1 unit each
+
+    state.items.push({
+      id: 'i' + Date.now(),
+      name,
+      packPrice,
+      unitsPerPack,
+      unitName,
+      bought: false,
+      allocations
+    });
+
+    document.getElementById('itemName').value = '';
+    document.getElementById('itemPackPrice').value = '';
+    document.getElementById('itemUnitsPerPack').value = '';
+    saveState();
+  }
+
+  function changeQty(itemId, memberId, delta) {
+    const item = state.items.find(i => i.id === itemId);
+    if (!item) return;
+    const current = item.allocations[memberId] || 0;
+    const next = Math.max(0, current + delta);
+    item.allocations[memberId] = next;
+    saveState();
+  }
+
+  function deleteItem(itemId) {
+    if (!confirm('حذف هذه السلعة؟')) return;
+    state.items = state.items.filter(i => i.id !== itemId);
+    saveState();
+  }
+
+  function toggleBought(itemId) {
+    const item = state.items.find(i => i.id === itemId);
+    if (item) {
+      item.bought = !item.bought;
+      saveState();
+    }
+  }
+
+  // --- EXPENSES ---
+  function addExpense() {
+    const title = document.getElementById('expTitle').value.trim();
+    const amount = parseFloat(document.getElementById('expAmount').value);
+    if (!title || isNaN(amount) || amount <= 0) return;
+    state.expenses.push({ id: 'e' + Date.now(), title, amount });
+    document.getElementById('expTitle').value = '';
+    document.getElementById('expAmount').value = '';
+    saveState();
+  }
+
+  function deleteExpense(id) {
+    state.expenses = state.expenses.filter(e => e.id !== id);
+    saveState();
+  }
+
+  // --- MEMBERS ---
+  function saveMember() {
+    const editId = document.getElementById('editMemberId').value;
+    const name = document.getElementById('memName').value.trim();
+    const pin = document.getElementById('memPin').value.trim();
+    const paid = parseFloat(document.getElementById('memPaid').value) || 0;
+    const role = document.getElementById('memRole').value;
+
+    if (!name || !pin) {
+      alert('يرجى إدخال الاسم والرمز السري.');
+      return;
+    }
+
+    if (editId) {
+      const m = state.members.find(x => x.id === editId);
+      if (m) { m.name = name; m.pin = pin; m.paid = paid; m.role = role; }
+    } else {
+      const newId = 'm' + Date.now();
+      state.members.push({ id: newId, name, pin, paid, role });
+      state.items.forEach(item => { item.allocations[newId] = 1; });
+    }
+
+    document.getElementById('editMemberId').value = '';
+    document.getElementById('memName').value = '';
+    document.getElementById('memPin').value = '';
+    document.getElementById('memPaid').value = '';
+    saveState();
+  }
+
+  function editMember(id) {
+    const m = state.members.find(x => x.id === id);
+    if (!m) return;
+    document.getElementById('editMemberId').value = m.id;
+    document.getElementById('memName').value = m.name;
+    document.getElementById('memPin').value = m.pin;
+    document.getElementById('memPaid').value = m.paid;
+    document.getElementById('memRole').value = m.role;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function deleteMember(id) {
+    if (state.members.length <= 1) return alert('لا يمكن حذف آخر عضو!');
+    if (!confirm('حذف هذا العضو من المجموعة؟')) return;
+    state.members = state.members.filter(m => m.id !== id);
+    state.items.forEach(i => { delete i.allocations[id]; });
+    saveState();
+  }
+
+  function rotateTasks() {
+    state.taskOffset = (state.taskOffset + 1) % state.members.length;
+    saveState();
+  }
+
+  // --- RENDERING ---
+  function renderAll() {
+    const fin = calculateFinancials();
+    const isAdmin = currentUser && currentUser.role === 'admin';
+
+    document.getElementById('statTotalCost').textContent = fin.grandTotal.toLocaleString() + ' دج';
+    document.getElementById('statTotalPaid').textContent = fin.totalPaid.toLocaleString() + ' دج';
+    document.getElementById('statMembersCount').textContent = state.members.length;
+
+    // Show/hide admin panels
+    document.getElementById('addMemberCard').style.display = isAdmin ? 'block' : 'none';
+
+    // Render Items
+    document.getElementById('itemsCountBadge').textContent = state.items.length + ' مواد';
+    const itemsBox = document.getElementById('itemsListContainer');
+    itemsBox.innerHTML = '';
+
+    state.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'item-row';
+
+      let membersRows = state.members.map(m => {
+        const q = item.allocations[m.id] || 0;
+        const canEdit = isAdmin || (currentUser && currentUser.id === m.id);
+        return `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="font-size:0.85rem;">${m.name}</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              ${canEdit ? `<button class="btn btn-outline btn-sm" onclick="changeQty('${item.id}','${m.id}',-1)">-</button>` : ''}
+              <strong style="min-width:24px; text-align:center;">${q}</strong>
+              ${canEdit ? `<button class="btn btn-primary btn-sm" onclick="changeQty('${item.id}','${m.id}',1)">+</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let surplusHtml = '';
+      if (item._surplus > 0 && currentUser) {
+        surplusHtml = `
+          <div class="surplus-bar">
+            <span>⚠️ متبقي ${item._surplus} ${item.unitName} فائض في الفاردو</span>
+            <button class="btn btn-primary btn-sm" onclick="changeQty('${item.id}','${currentUser.id}',1)">+ خذ 1 لي</button>
+          </div>
+        `;
+      }
+
+      div.innerHTML = `
+        <div class="item-header">
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-meta">الفاردو: ${item.packPrice} دج (${item.unitsPerPack} ${item.unitName}) • الوحدة: ${Math.round(item._unitPrice)} دج</div>
+            <div class="item-meta" style="color:var(--primary-dark); font-weight:700;">المطلوب شراؤه: ${item._packsNeeded} فاردو (المجموع ${item._totalBoughtUnits} ${item.unitName})</div>
+          </div>
+          ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}')">حذف</button>` : ''}
+        </div>
+        <div style="margin-top:8px;">${membersRows}</div>
+        ${surplusHtml}
+      `;
+      itemsBox.appendChild(div);
+    });
+
+    // Render Expenses
+    const expBox = document.getElementById('expensesList');
+    expBox.innerHTML = state.expenses.map(e => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f1f5f9; font-size:0.85rem;">
+        <span>${e.title}</span>
+        <div>
+          <strong>${e.amount} دج</strong>
+          ${isAdmin ? `<button class="btn btn-danger btn-sm" style="margin-right:6px;" onclick="deleteExpense('${e.id}')">×</button>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // Render Members
+    const memBox = document.getElementById('membersListContainer');
+    memBox.innerHTML = fin.memberSummaries.map(s => {
+      const m = s.member;
+      const badge = s.balance >= 0
+        ? `<span class="badge badge-green">يسترجع: ${s.balance} دج</span>`
+        : `<span class="badge badge-red">يدفع الباقي: ${Math.abs(s.balance)} دج</span>`;
+      return `
+        <div class="item-row">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>${m.name}</strong> <span style="font-size:0.75rem; color:var(--muted);">(PIN: ${isAdmin || (currentUser && currentUser.id === m.id) ? m.pin : '****'})</span>
+              <div style="font-size:0.8rem; color:var(--muted);">دفع مقدماً: <strong>${m.paid} دج</strong> | حصته: <strong>${s.totalDue} دج</strong></div>
+            </div>
+            <div>${badge}</div>
+          </div>
+          ${isAdmin ? `
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              <button class="btn btn-outline btn-sm" onclick="editMember('${m.id}')">✏️ تعديل / تسبيق</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteMember('${m.id}')">🗑️ حذف</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+    // Render Tasks
+    const roleNames = ['💰 أمين الصندوق والمحاسب', '🛒 فريق الشراء (سوق الجملة)', '🚗 مسؤول النقل والسيارة', '⚖️ مسؤول الفرز والوزن'];
+    const tasksBox = document.getElementById('tasksContainer');
+    tasksBox.innerHTML = roleNames.map((r, idx) => {
+      const assigned = state.members[(idx + state.taskOffset) % state.members.length];
+      return `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f1f5f9; font-size:0.88rem;">
+        <span>${r}</span>
+        <strong>${assigned ? assigned.name : '-'}</strong>
+      </div>`;
+    }).join('');
+
+    // Render Market Mode
+    const boughtCount = state.items.filter(i => i.bought).length;
+    const pct = state.items.length ? Math.round((boughtCount / state.items.length) * 100) : 0;
+    document.getElementById('marketProgressBadge').textContent = `${pct}% (${boughtCount}/${state.items.length})`;
+
+    const marketBox = document.getElementById('marketChecklistContainer');
+    marketBox.innerHTML = state.items.map(item => `
+      <div class="item-row" style="display:flex; justify-content:space-between; align-items:center; opacity:${item.bought ? '0.65' : '1'};" onclick="toggleBought('${item.id}')">
+        <div>
+          <div style="font-weight:800; text-decoration:${item.bought ? 'line-through' : 'none'};">${item.bought ? '✅' : '⬜'} ${item.name}</div>
+          <div class="item-meta">الكمية: <strong>${item._packsNeeded} فاردو</strong> × ${item.packPrice} دج = ${item._totalCost} دج</div>
+        </div>
+        <span class="badge ${item.bought ? 'badge-green' : 'badge-amber'}">${item.bought ? 'تم الشراء' : 'قيد الشراء'}</span>
+      </div>
+    `).join('');
+
+    // Render Distribution & WhatsApp Cards
+    const indBox = document.getElementById('individualCardsContainer');
+    indBox.innerHTML = fin.memberSummaries.map(s => {
+      const listHtml = s.myItems.map(x => `<li>${x.name}: <strong>${x.qty} ${x.unitName}</strong> (${Math.round(x.cost)} دج)</li>`).join('');
+      return `
+        <div class="card">
+          <div class="card-title">
+            <span>📦 بطاقة فرز: ${s.member.name}</span>
+            <span class="badge ${s.balance >= 0 ? 'badge-green' : 'badge-red'}">${s.balance >= 0 ? 'يسترجع ' + s.balance : 'يدفع ' + Math.abs(s.balance)} دج</span>
+          </div>
+          <ul style="padding-right:18px; margin:8px 0; font-size:0.85rem;">
+            ${listHtml || '<li>لا توجد سلع محددة</li>'}
+            <li>حصة المصاريف المشتركة: <strong>${s.expenseShare} دج</strong></li>
+          </ul>
+          <div style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">
+            المجموع المستحق: <strong>${s.totalDue} دج</strong> | المدفوع مسبقاً: <strong>${s.member.paid} دج</strong>
+          </div>
+          <button class="btn btn-whatsapp btn-sm" style="width:100%;" onclick="copyMemberWhatsApp('${s.member.id}')">📲 نسخ بطاقة ${s.member.name} للواتساب</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // --- WHATSAPP EXPORT ---
+  function copyMemberWhatsApp(memberId) {
+    const fin = calculateFinancials();
+    const s = fin.memberSummaries.find(x => x.member.id === memberId);
+    if (!s) return;
+    let txt = `🛒 *بطاقة فرز العولة المشتركة*
+`;
+    txt += `👤 العضو: *${s.member.name}*
+`;
+    txt += `------------------
+`;
+    s.myItems.forEach(i => {
+      txt += `▪️ ${i.name}: *${i.qty} ${i.unitName}* (${Math.round(i.cost)} دج)
+`;
+    });
+    txt += `⛽ مصاريف مشتركة: ${s.expenseShare} دج
+`;
+    txt += `------------------
+`;
+    txt += `💰 الإجمالي: *${s.totalDue} دج*
+`;
+    txt += `💵 المدفوع مسبقاً: ${s.member.paid} دج
+`;
+    txt += s.balance >= 0
+      ? `✅ *الباقي لك (تسترجع): ${s.balance} دج*`
+      : `⚠️ *الباقي عليك (تدفع): ${Math.abs(s.balance)} دج*`;
+
+    navigator.clipboard.writeText(txt).then(() => alert('تم نسخ التقرير! الصقه مباشرة في واتساب.'));
+  }
+
+  function copyGroupWhatsApp() {
+    const fin = calculateFinancials();
+    let txt = `📊 *ملخص العولة المشتركة (شراء بالجملة)*
+`;
+    txt += `💰 إجمالي المشتريات: *${fin.grandTotal} دج*
+
+`;
+    txt += `📦 *قائمة الفاردوات المطلوبة:*
+`;
+    state.items.forEach(i => {
+      txt += `- ${i.name}: *${i._packsNeeded} فاردو* (${i._totalCost} دج)
+`;
+    });
+    txt += `
+👥 *الوضعية المالية للأعضاء:*
+`;
+    fin.memberSummaries.forEach(s => {
+      const status = s.balance >= 0 ? `يسترجع ${s.balance} دج` : `يدفع ${Math.abs(s.balance)} دج`;
+      txt += `▪️ ${s.member.name}: حصته ${s.totalDue} دج (${status})
+`;
+    });
+    navigator.clipboard.writeText(txt).then(() => alert('تم نسخ التقرير العام للمجموعة!'));
+  }
+
+  // --- BACKUP & RESET ---
+  function exportData() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'aloula_backup.json';
+    a.click();
+  }
+
+  function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        state = JSON.parse(e.target.result);
+        saveState();
+        alert('تم استيراد البيانات بنجاح!');
+      } catch (err) {
+        alert('ملف غير صالح.');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function resetMonth() {
+    if (!confirm('هل أنت متأكد من تصفير جميع السلع والمصاريف لبدء شهر جديد؟ (سيتم الإبقاء على الأعضاء)')) return;
+    state.items = [];
+    state.expenses = [];
+    state.members.forEach(m => { m.paid = 0; });
+    saveState();
+  }
+
+  // Start
+  initLogin();
+</script>
+</body>
+</html>
