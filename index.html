@@ -15,20 +15,17 @@
     :root {
       --primary: #059669;
       --primary-dark: #047857;
-      --primary-light: #d1fae5;
       --bg: #f1f5f9;
       --card: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
       --danger: #ef4444;
-      --warning: #f59e0b;
     }
     * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 85px; }
     .container { max-width: 600px; margin: 0 auto; padding: 14px; }
     
-    /* Header */
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -41,22 +38,32 @@
       z-index: 50;
     }
     .header-top { display: flex; justify-content: space-between; align-items: center; }
-    .header-title { font-size: 1.25rem; font-weight: 800; margin: 0; }
-    .header-sub { font-size: 0.8rem; opacity: 0.9; }
-    .header-actions { display: flex; gap: 8px; }
+    .header-title { font-size: 1.2rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 6px; }
+    .header-sub { font-size: 0.78rem; opacity: 0.92; margin-top: 2px; }
+    .header-actions { display: flex; gap: 6px; }
     .btn-icon {
       background: rgba(255,255,255,0.2);
       border: none;
       color: white;
-      padding: 7px 11px;
+      padding: 7px 10px;
       border-radius: 10px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
     }
-    .btn-icon:active { transform: scale(0.96); }
 
-    /* Update Banner */
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      background: rgba(0,0,0,0.2);
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+    .dot.offline { background: #fbbf24; }
+
     #updateBanner {
       display: none;
       background: #fef3c7;
@@ -67,11 +74,10 @@
       border: 1px solid #f59e0b;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
     }
 
-    /* Cards & UI */
     .card {
       background: var(--card);
       border-radius: 16px;
@@ -80,14 +86,13 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       border: 1px solid var(--border);
     }
-    .card-title { font-size: 1.05rem; font-weight: 800; margin: 0 0 12px 0; display: flex; justify-content: space-between; align-items: center; }
+    .card-title { font-size: 1.02rem; font-weight: 800; margin: 0 0 12px 0; display: flex; justify-content: space-between; align-items: center; }
     
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
     .stat-box { background: white; padding: 12px 8px; border-radius: 14px; text-align: center; border: 1px solid var(--border); }
-    .stat-val { font-size: 1.05rem; font-weight: 800; color: var(--primary); }
+    .stat-val { font-size: 1.02rem; font-weight: 800; color: var(--primary); }
     .stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
 
-    /* Forms */
     input, select {
       width: 100%;
       padding: 10px 12px;
@@ -109,23 +114,18 @@
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.15s;
     }
     .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:active { background: var(--primary-dark); }
     .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
     .btn-sm { padding: 6px 10px; font-size: 0.8rem; width: auto; border-radius: 8px; }
     .btn-danger { background: #fee2e2; color: var(--danger); }
     .btn-whatsapp { background: #25D366; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-    /* Badges */
     .badge { padding: 3px 8px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; }
     .badge-green { background: #dcfce7; color: #166534; }
     .badge-red { background: #fee2e2; color: #991b1b; }
     .badge-amber { background: #fef3c7; color: #92400e; }
-    .badge-blue { background: #dbeafe; color: #1e40af; }
 
-    /* Bottom Navigation */
     nav.bottom-nav {
       position: fixed;
       bottom: 0;
@@ -158,7 +158,6 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Item list */
     .item-row {
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -182,7 +181,6 @@
       font-weight: 700;
     }
 
-    /* Login Screen */
     #loginScreen {
       min-height: 100vh;
       display: flex;
@@ -196,10 +194,10 @@
       width: 100%;
       max-width: 400px;
       border-radius: 24px;
-      padding: 26px 20px;
+      padding: 24px 20px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.25);
     }
-    .quick-pins { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .quick-pins { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .pin-chip {
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
@@ -215,23 +213,30 @@
 <!-- LOGIN VIEW -->
 <div id="loginScreen">
   <div class="login-box">
-    <div style="text-align:center; margin-bottom: 18px;">
-      <div style="font-size: 2.5rem;">🛒</div>
-      <h1 style="margin:6px 0 2px; font-size:1.4rem; color:#064e3b;">العولة المشتركة</h1>
-      <p style="margin:0; color:#64748b; font-size:0.85rem;">إدارة الشراء بالجملة وتقسيم الحصص للعائلات</p>
+    <div style="text-align:center; margin-bottom: 14px;">
+      <div style="font-size: 2.3rem;">🛒</div>
+      <h1 style="margin:4px 0 2px; font-size:1.35rem; color:#064e3b;">العولة المشتركة (Realtime)</h1>
+      <p style="margin:0; color:#64748b; font-size:0.82rem;">مزامنة فورية عبر Firebase Realtime Database</p>
     </div>
 
-    <label style="font-size:0.85rem; font-weight:700;">اختر العضو:</label>
+    <label style="font-size:0.82rem; font-weight:700;">كود المجموعة المشترك (Group ID):</label>
+    <div style="display:flex; gap:6px;">
+      <input type="text" id="groupCodeInput" value="aloula-dz-2026" placeholder="أدخل كود مجموعتكم..." />
+      <button type="button" class="btn btn-outline btn-sm" style="height:41px;" onclick="connectGroup()">ربط</button>
+    </div>
+
+    <label style="font-size:0.82rem; font-weight:700;">اختر العضو:</label>
     <select id="loginMemberSelect"></select>
 
-    <label style="font-size:0.85rem; font-weight:700;">كلمة المرور (PIN):</label>
+    <label style="font-size:0.82rem; font-weight:700;">كلمة المرور (PIN):</label>
     <input type="password" id="loginPinInput" placeholder="أدخل الرمز السري..." inputmode="numeric" />
 
     <button class="btn btn-primary" onclick="handleLogin()">دخول للتطبيق</button>
     <p id="loginError" style="color:#ef4444; font-size:0.82rem; text-align:center; margin-top:8px; display:none;">كلمة المرور غير صحيحة!</p>
+    <p id="firebaseStatusMsg" style="color:#059669; font-size:0.76rem; text-align:center; margin-top:8px;"></p>
 
-    <div style="margin-top:16px; padding-top:12px; border-top:1px dashed #e2e8f0;">
-      <div style="font-size:0.75rem; color:#64748b; margin-bottom:6px;">دخول تجريبي سريع (اضغط للتعبئة):</div>
+    <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #e2e8f0;">
+      <div style="font-size:0.74rem; color:#64748b; margin-bottom:6px;">دخول تجريبي سريع:</div>
       <div class="quick-pins" id="quickPinsContainer"></div>
     </div>
   </div>
@@ -242,24 +247,25 @@
   <header>
     <div class="header-top">
       <div>
-        <h1 class="header-title">🛒 العولة المشتركة</h1>
+        <div class="header-title">
+          <span>🛒 العولة المشتركة</span>
+          <span class="sync-pill"><span class="dot" id="syncDot"></span><span id="syncText">متصل</span></span>
+        </div>
         <div class="header-sub" id="currentUserBadge">مرحباً</div>
       </div>
       <div class="header-actions">
-        <button class="btn-icon" onclick="checkForAppUpdate()" title="تحديث التطبيق">🔄 تحديث</button>
+        <button class="btn-icon" onclick="checkForAppUpdate()">🔄 تحديث</button>
         <button class="btn-icon" onclick="logout()">🚪 خروج</button>
       </div>
     </div>
   </header>
 
   <div class="container">
-    <!-- Auto-Update Banner -->
     <div id="updateBanner">
       <span>✨ يتوفر إصدار جديد من التطبيق!</span>
       <button class="btn btn-primary btn-sm" onclick="applyUpdate()">تحديث الآن</button>
     </div>
 
-    <!-- Summary Stats -->
     <div class="stats-grid">
       <div class="stat-box">
         <div class="stat-val" id="statTotalCost">0 دج</div>
@@ -275,9 +281,9 @@
       </div>
     </div>
 
-    <!-- TAB 1: ITEMS (السلع والفاردو) -->
+    <!-- TAB 1: ITEMS -->
     <div id="tab-items" class="tab-content active">
-      <div class="card" id="addItemCard">
+      <div class="card">
         <div class="card-title">➕ إضافة سلعة بالجملة (فاردو / كرتونة)</div>
         <input type="text" id="itemName" placeholder="اسم المادة (مثلاً: زيت المائدة 2L، مقارون، سميد...)" />
         <div class="row-3">
@@ -305,7 +311,6 @@
         <div id="itemsListContainer"></div>
       </div>
 
-      <!-- Shared Expenses -->
       <div class="card">
         <div class="card-title">⛽ مصاريف مشتركة (نقل، أكياس تغليف...)</div>
         <div class="row-2">
@@ -317,7 +322,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: MEMBERS & TASKS (الأعضاء والمهام) -->
+    <!-- TAB 2: MEMBERS & TASKS -->
     <div id="tab-members" class="tab-content">
       <div class="card" id="addMemberCard">
         <div class="card-title">👥 إضافة / تعديل عضو</div>
@@ -350,19 +355,19 @@
       </div>
     </div>
 
-    <!-- TAB 3: MARKET MODE (وضع السوق) -->
+    <!-- TAB 3: MARKET MODE -->
     <div id="tab-market" class="tab-content">
       <div class="card">
         <div class="card-title">
           <span>🏪 قائمة الشراء في سوق الجملة</span>
           <span class="badge badge-amber" id="marketProgressBadge">0%</span>
         </div>
-        <p style="font-size:0.82rem; color:var(--muted); margin-top:0;">أشّر على الفاردوات والكراتين التي تم شراؤها فعلياً في السوق:</p>
+        <p style="font-size:0.82rem; color:var(--muted); margin-top:0;">أشّر على الفاردوات التي تم شراؤها في السوق (تتحدث عند الجميع فوراً):</p>
         <div id="marketChecklistContainer"></div>
       </div>
     </div>
 
-    <!-- TAB 4: DISTRIBUTION & WHATSAPP (الفرز والواتساب) -->
+    <!-- TAB 4: REPORTS & WHATSAPP -->
     <div id="tab-reports" class="tab-content">
       <div class="card">
         <div class="card-title">📲 التقرير العام للمجموعة</div>
@@ -383,7 +388,6 @@
     </div>
   </div>
 
-  <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <button class="nav-item active" onclick="switchTab('items', this)">
       <span class="nav-icon">📦</span>
@@ -404,7 +408,39 @@
   </nav>
 </div>
 
+<!-- Firebase App & Realtime Database SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
+  // =========================================================================
+  // إعدادات مشروعك الجاهزة في Firebase Realtime Database
+  // =========================================================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpa1VyaMsTnmeQU-rZOoHFUNk5g25qyFc",
+    authDomain: "el-aoula-achat.firebaseapp.com",
+    databaseURL: "https://el-aoula-achat-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "el-aoula-achat",
+    storageBucket: "el-aoula-achat.firebasestorage.app",
+    messagingSenderId: "201893844656",
+    appId: "1:201893844656:web:34bf4cc8e2be2a00950d75",
+    measurementId: "G-B430P1QG2G"
+  };
+
+  let rtdb = null;
+  let currentRef = null;
+  let isFirebaseReady = false;
+
+  try {
+    if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+      firebase.initializeApp(firebaseConfig);
+      rtdb = firebase.database();
+      isFirebaseReady = true;
+    }
+  } catch (e) {
+    console.warn("Firebase init fallback:", e);
+  }
+
   // --- SERVICE WORKER & AUTO UPDATE ---
   let newWorker;
   if ('serviceWorker' in navigator) {
@@ -418,7 +454,7 @@
             }
           });
         });
-      }).catch(err => console.log('SW registration note:', err));
+      }).catch(() => {});
     });
   }
 
@@ -427,26 +463,22 @@
       navigator.serviceWorker.getRegistration().then(reg => {
         if (reg) {
           reg.update().then(() => {
-            alert('تم فحص التحديثات! إذا توفر إصدار جديد سيظهر شريط التحديث في الأعلى دون مسح بياناتكم.');
+            alert('تم فحص التحديثات! في حال وجود إصدار جديد سيظهر شريط التحديث في الأعلى دون حذف بياناتكم.');
           });
-        } else {
-          location.reload();
-        }
+        } else { location.reload(); }
       });
-    } else {
-      location.reload();
-    }
+    } else { location.reload(); }
   }
 
   function applyUpdate() {
-    if (newWorker) {
-      newWorker.postMessage({ type: 'SKIP_WAITING' });
-    }
+    if (newWorker) newWorker.postMessage({ type: 'SKIP_WAITING' });
     window.location.reload();
   }
 
-  // --- STATE MANAGEMENT ---
-  const STORAGE_KEY = 'aloula_group_v1';
+  // --- STATE ---
+  const STORAGE_KEY = 'aloula_rtdb_cache_v31';
+  const GROUP_KEY = 'aloula_group_code';
+
   const defaultState = {
     members: [
       { id: 'm1', name: 'يونس (المسؤول)', pin: '1234', paid: 10000, role: 'admin' },
@@ -471,16 +503,7 @@
         unitsPerPack: 6,
         unitName: 'باطة',
         bought: true,
-        allocations: { m1: 2, m2: 1, m3: 1, m4: 1 } // 5 taken -> 1 surplus!
-      },
-      {
-        id: 'i3',
-        name: 'سميد رفيع (كيس 25 كغ)',
-        packPrice: 1000,
-        unitsPerPack: 5,
-        unitName: 'حصة 5 كغ',
-        bought: false,
-        allocations: { m1: 1, m2: 1, m3: 1, m4: 1 } // 4 taken -> 1 surplus!
+        allocations: { m1: 2, m2: 1, m3: 1, m4: 1 }
       }
     ],
     expenses: [
@@ -491,19 +514,97 @@
 
   let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultState;
   let currentUser = null;
+  let currentGroupCode = localStorage.getItem(GROUP_KEY) || 'aloula-dz-2026';
+
+  function setSyncIndicator(online, text) {
+    const dot = document.getElementById('syncDot');
+    const lbl = document.getElementById('syncText');
+    if (dot && lbl) {
+      dot.className = online ? 'dot' : 'dot offline';
+      lbl.textContent = text;
+    }
+  }
+
+  function connectGroup() {
+    const rawCode = document.getElementById('groupCodeInput').value.trim();
+    if (!rawCode) return alert('يرجى إدخال كود المجموعة');
+    const code = rawCode.replace(/[.#$\[\]\/]/g, '_');
+    currentGroupCode = code;
+    localStorage.setItem(GROUP_KEY, code);
+
+    const statusMsg = document.getElementById('firebaseStatusMsg');
+
+    if (!isFirebaseReady || !rtdb) {
+      statusMsg.style.color = '#d97706';
+      statusMsg.textContent = '⚠️ وضع التخزين المحلي';
+      setSyncIndicator(false, 'محلي');
+      initLogin();
+      return;
+    }
+
+    if (currentRef) currentRef.off();
+    statusMsg.style.color = '#059669';
+    statusMsg.textContent = '🔄 جاري الاتصال بـ Realtime Database...';
+
+    currentRef = rtdb.ref('groups/' + currentGroupCode);
+    currentRef.on('value', (snapshot) => {
+      const val = snapshot.val();
+      if (val) {
+        state = {
+          members: val.members || [],
+          items: val.items || [],
+          expenses: val.expenses || [],
+          taskOffset: val.taskOffset || 0
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        statusMsg.textContent = `✅ متصل بقاعدة البيانات الحية: ${currentGroupCode}`;
+        setSyncIndicator(true, 'مزامنة حية');
+      } else {
+        currentRef.set(state).then(() => {
+          statusMsg.textContent = `✅ تم تهيئة بيانات المجموعة في السحابة: ${currentGroupCode}`;
+          setSyncIndicator(true, 'مزامنة حية');
+        });
+      }
+      initLogin();
+      if (currentUser) {
+        currentUser = state.members.find(m => m.id === currentUser.id) || null;
+        if (currentUser) renderAll();
+      }
+    }, (err) => {
+      console.error(err);
+      statusMsg.style.color = '#ef4444';
+      statusMsg.textContent = '⚠️ خطأ في الصلاحيات (تأكد من Règles في Firebase)';
+      setSyncIndicator(false, 'خطأ صلاحيات');
+    });
+  }
 
   function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     renderAll();
+    if (isFirebaseReady && currentRef) {
+      setSyncIndicator(true, 'جاري الحفظ...');
+      const cleanData = {
+        members: state.members || [],
+        items: state.items || [],
+        expenses: state.expenses || [],
+        taskOffset: state.taskOffset || 0
+      };
+      currentRef.set(cleanData)
+        .then(() => setSyncIndicator(true, 'مزامنة حية'))
+        .catch(() => setSyncIndicator(false, 'خطأ مزامنة'));
+    }
   }
 
   // --- AUTH ---
   function initLogin() {
+    document.getElementById('groupCodeInput').value = currentGroupCode;
     const sel = document.getElementById('loginMemberSelect');
     const chips = document.getElementById('quickPinsContainer');
+    const prevSelected = sel.value;
     sel.innerHTML = '';
     chips.innerHTML = '';
-    state.members.forEach(m => {
+
+    (state.members || []).forEach(m => {
       const opt = document.createElement('option');
       opt.value = m.id;
       opt.textContent = `${m.name} (${m.role === 'admin' ? 'مسؤول' : 'عضو'})`;
@@ -519,18 +620,19 @@
       };
       chips.appendChild(chip);
     });
+    if (prevSelected) sel.value = prevSelected;
   }
 
   function handleLogin() {
     const id = document.getElementById('loginMemberSelect').value;
     const pin = document.getElementById('loginPinInput').value.trim();
-    const member = state.members.find(m => m.id === id);
+    const member = (state.members || []).find(m => m.id === id);
     if (member && member.pin === pin) {
       currentUser = member;
       document.getElementById('loginError').style.display = 'none';
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('appScreen').style.display = 'block';
-      document.getElementById('currentUserBadge').textContent = `👤 ${member.name} • ${member.role === 'admin' ? 'صلاحية المسؤول' : 'عضو'}`;
+      document.getElementById('currentUserBadge').textContent = `👤 ${member.name} • مجموعة: ${currentGroupCode}`;
       renderAll();
     } else {
       document.getElementById('loginError').style.display = 'block';
@@ -545,7 +647,6 @@
     initLogin();
   }
 
-  // --- NAVIGATION ---
   function switchTab(tabName, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -556,8 +657,12 @@
   // --- CALCULATIONS ---
   function calculateFinancials() {
     let totalItemsCost = 0;
-    state.items.forEach(item => {
-      const totalUnits = Object.values(item.allocations).reduce((a, b) => a + b, 0);
+    const items = state.items || [];
+    const members = state.members || [];
+    const expenses = state.expenses || [];
+
+    items.forEach(item => {
+      const totalUnits = Object.values(item.allocations || {}).reduce((a, b) => a + b, 0);
       const packsNeeded = Math.ceil(totalUnits / item.unitsPerPack);
       item._totalUnits = totalUnits;
       item._packsNeeded = packsNeeded;
@@ -568,16 +673,16 @@
       totalItemsCost += item._totalCost;
     });
 
-    const totalExpenses = state.expenses.reduce((sum, e) => sum + Number(e.amount), 0);
+    const totalExpenses = expenses.reduce((sum, e) => sum + Number(e.amount), 0);
     const grandTotal = totalItemsCost + totalExpenses;
-    const totalPaid = state.members.reduce((sum, m) => sum + Number(m.paid), 0);
-    const expensePerMember = state.members.length > 0 ? totalExpenses / state.members.length : 0;
+    const totalPaid = members.reduce((sum, m) => sum + Number(m.paid), 0);
+    const expensePerMember = members.length > 0 ? totalExpenses / members.length : 0;
 
-    const memberSummaries = state.members.map(m => {
+    const memberSummaries = members.map(m => {
       let itemsShare = 0;
       let myItems = [];
-      state.items.forEach(item => {
-        const qty = item.allocations[m.id] || 0;
+      items.forEach(item => {
+        const qty = (item.allocations && item.allocations[m.id]) || 0;
         if (qty > 0) {
           const cost = qty * item._unitPrice;
           itemsShare += cost;
@@ -585,14 +690,14 @@
         }
       });
       const totalDue = Math.round(itemsShare + expensePerMember);
-      const balance = Math.round(m.paid - totalDue); // positive = يسترجع, negative = يدفع الباقي
+      const balance = Math.round(m.paid - totalDue);
       return { member: m, myItems, expenseShare: Math.round(expensePerMember), totalDue, balance };
     });
 
     return { grandTotal, totalPaid, memberSummaries };
   }
 
-  // --- ITEMS ACTIONS ---
+  // --- ACTIONS ---
   function addNewItem() {
     const name = document.getElementById('itemName').value.trim();
     const packPrice = parseFloat(document.getElementById('itemPackPrice').value);
@@ -600,19 +705,16 @@
     const unitName = document.getElementById('itemUnitName').value.trim() || 'وحدة';
 
     if (!name || isNaN(packPrice) || isNaN(unitsPerPack) || unitsPerPack <= 0) {
-      alert('يرجى إدخال اسم السلعة والسعر وعدد الوحدات بشكل صحيح.');
-      return;
+      return alert('يرجى إدخال اسم السلعة والسعر وعدد الوحدات بشكل صحيح.');
     }
 
     const allocations = {};
-    state.members.forEach(m => { allocations[m.id] = 1; }); // Default 1 unit each
+    (state.members || []).forEach(m => { allocations[m.id] = 1; });
 
+    if (!state.items) state.items = [];
     state.items.push({
       id: 'i' + Date.now(),
-      name,
-      packPrice,
-      unitsPerPack,
-      unitName,
+      name, packPrice, unitsPerPack, unitName,
       bought: false,
       allocations
     });
@@ -624,33 +726,33 @@
   }
 
   function changeQty(itemId, memberId, delta) {
-    const item = state.items.find(i => i.id === itemId);
+    const item = (state.items || []).find(i => i.id === itemId);
     if (!item) return;
+    if (!item.allocations) item.allocations = {};
     const current = item.allocations[memberId] || 0;
-    const next = Math.max(0, current + delta);
-    item.allocations[memberId] = next;
+    item.allocations[memberId] = Math.max(0, current + delta);
     saveState();
   }
 
   function deleteItem(itemId) {
     if (!confirm('حذف هذه السلعة؟')) return;
-    state.items = state.items.filter(i => i.id !== itemId);
+    state.items = (state.items || []).filter(i => i.id !== itemId);
     saveState();
   }
 
   function toggleBought(itemId) {
-    const item = state.items.find(i => i.id === itemId);
+    const item = (state.items || []).find(i => i.id === itemId);
     if (item) {
       item.bought = !item.bought;
       saveState();
     }
   }
 
-  // --- EXPENSES ---
   function addExpense() {
     const title = document.getElementById('expTitle').value.trim();
     const amount = parseFloat(document.getElementById('expAmount').value);
     if (!title || isNaN(amount) || amount <= 0) return;
+    if (!state.expenses) state.expenses = [];
     state.expenses.push({ id: 'e' + Date.now(), title, amount });
     document.getElementById('expTitle').value = '';
     document.getElementById('expAmount').value = '';
@@ -658,11 +760,10 @@
   }
 
   function deleteExpense(id) {
-    state.expenses = state.expenses.filter(e => e.id !== id);
+    state.expenses = (state.expenses || []).filter(e => e.id !== id);
     saveState();
   }
 
-  // --- MEMBERS ---
   function saveMember() {
     const editId = document.getElementById('editMemberId').value;
     const name = document.getElementById('memName').value.trim();
@@ -670,10 +771,8 @@
     const paid = parseFloat(document.getElementById('memPaid').value) || 0;
     const role = document.getElementById('memRole').value;
 
-    if (!name || !pin) {
-      alert('يرجى إدخال الاسم والرمز السري.');
-      return;
-    }
+    if (!name || !pin) return alert('يرجى إدخال الاسم والرمز السري.');
+    if (!state.members) state.members = [];
 
     if (editId) {
       const m = state.members.find(x => x.id === editId);
@@ -681,7 +780,10 @@
     } else {
       const newId = 'm' + Date.now();
       state.members.push({ id: newId, name, pin, paid, role });
-      state.items.forEach(item => { item.allocations[newId] = 1; });
+      (state.items || []).forEach(item => {
+        if (!item.allocations) item.allocations = {};
+        item.allocations[newId] = 1;
+      });
     }
 
     document.getElementById('editMemberId').value = '';
@@ -692,7 +794,7 @@
   }
 
   function editMember(id) {
-    const m = state.members.find(x => x.id === id);
+    const m = (state.members || []).find(x => x.id === id);
     if (!m) return;
     document.getElementById('editMemberId').value = m.id;
     document.getElementById('memName').value = m.name;
@@ -703,41 +805,41 @@
   }
 
   function deleteMember(id) {
-    if (state.members.length <= 1) return alert('لا يمكن حذف آخر عضو!');
+    if ((state.members || []).length <= 1) return alert('لا يمكن حذف آخر عضو!');
     if (!confirm('حذف هذا العضو من المجموعة؟')) return;
     state.members = state.members.filter(m => m.id !== id);
-    state.items.forEach(i => { delete i.allocations[id]; });
+    (state.items || []).forEach(i => { if (i.allocations) delete i.allocations[id]; });
     saveState();
   }
 
   function rotateTasks() {
-    state.taskOffset = (state.taskOffset + 1) % state.members.length;
+    state.taskOffset = ((state.taskOffset || 0) + 1) % state.members.length;
     saveState();
   }
 
-  // --- RENDERING ---
+  // --- RENDER ---
   function renderAll() {
     const fin = calculateFinancials();
     const isAdmin = currentUser && currentUser.role === 'admin';
+    const items = state.items || [];
+    const members = state.members || [];
 
     document.getElementById('statTotalCost').textContent = fin.grandTotal.toLocaleString() + ' دج';
     document.getElementById('statTotalPaid').textContent = fin.totalPaid.toLocaleString() + ' دج';
-    document.getElementById('statMembersCount').textContent = state.members.length;
+    document.getElementById('statMembersCount').textContent = members.length;
 
-    // Show/hide admin panels
     document.getElementById('addMemberCard').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('itemsCountBadge').textContent = items.length + ' مواد';
 
-    // Render Items
-    document.getElementById('itemsCountBadge').textContent = state.items.length + ' مواد';
     const itemsBox = document.getElementById('itemsListContainer');
     itemsBox.innerHTML = '';
 
-    state.items.forEach(item => {
+    items.forEach(item => {
       const div = document.createElement('div');
       div.className = 'item-row';
 
-      let membersRows = state.members.map(m => {
-        const q = item.allocations[m.id] || 0;
+      let membersRows = members.map(m => {
+        const q = (item.allocations && item.allocations[m.id]) || 0;
         const canEdit = isAdmin || (currentUser && currentUser.id === m.id);
         return `
           <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
@@ -766,7 +868,7 @@
           <div>
             <div class="item-name">${item.name}</div>
             <div class="item-meta">الفاردو: ${item.packPrice} دج (${item.unitsPerPack} ${item.unitName}) • الوحدة: ${Math.round(item._unitPrice)} دج</div>
-            <div class="item-meta" style="color:var(--primary-dark); font-weight:700;">المطلوب شراؤه: ${item._packsNeeded} فاردو (المجموع ${item._totalBoughtUnits} ${item.unitName})</div>
+            <div class="item-meta" style="color:var(--primary-dark); font-weight:700;">المطلوب شراؤه: ${item._packsNeeded} فاردو (${item._totalBoughtUnits} ${item.unitName})</div>
           </div>
           ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}')">حذف</button>` : ''}
         </div>
@@ -776,9 +878,8 @@
       itemsBox.appendChild(div);
     });
 
-    // Render Expenses
     const expBox = document.getElementById('expensesList');
-    expBox.innerHTML = state.expenses.map(e => `
+    expBox.innerHTML = (state.expenses || []).map(e => `
       <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f1f5f9; font-size:0.85rem;">
         <span>${e.title}</span>
         <div>
@@ -788,7 +889,6 @@
       </div>
     `).join('');
 
-    // Render Members
     const memBox = document.getElementById('membersListContainer');
     memBox.innerHTML = fin.memberSummaries.map(s => {
       const m = s.member;
@@ -814,24 +914,22 @@
       `;
     }).join('');
 
-    // Render Tasks
     const roleNames = ['💰 أمين الصندوق والمحاسب', '🛒 فريق الشراء (سوق الجملة)', '🚗 مسؤول النقل والسيارة', '⚖️ مسؤول الفرز والوزن'];
     const tasksBox = document.getElementById('tasksContainer');
     tasksBox.innerHTML = roleNames.map((r, idx) => {
-      const assigned = state.members[(idx + state.taskOffset) % state.members.length];
+      const assigned = members[(idx + (state.taskOffset || 0)) % members.length];
       return `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f1f5f9; font-size:0.88rem;">
         <span>${r}</span>
         <strong>${assigned ? assigned.name : '-'}</strong>
       </div>`;
     }).join('');
 
-    // Render Market Mode
-    const boughtCount = state.items.filter(i => i.bought).length;
-    const pct = state.items.length ? Math.round((boughtCount / state.items.length) * 100) : 0;
-    document.getElementById('marketProgressBadge').textContent = `${pct}% (${boughtCount}/${state.items.length})`;
+    const boughtCount = items.filter(i => i.bought).length;
+    const pct = items.length ? Math.round((boughtCount / items.length) * 100) : 0;
+    document.getElementById('marketProgressBadge').textContent = `${pct}% (${boughtCount}/${items.length})`;
 
     const marketBox = document.getElementById('marketChecklistContainer');
-    marketBox.innerHTML = state.items.map(item => `
+    marketBox.innerHTML = items.map(item => `
       <div class="item-row" style="display:flex; justify-content:space-between; align-items:center; opacity:${item.bought ? '0.65' : '1'};" onclick="toggleBought('${item.id}')">
         <div>
           <div style="font-weight:800; text-decoration:${item.bought ? 'line-through' : 'none'};">${item.bought ? '✅' : '⬜'} ${item.name}</div>
@@ -841,7 +939,6 @@
       </div>
     `).join('');
 
-    // Render Distribution & WhatsApp Cards
     const indBox = document.getElementById('individualCardsContainer');
     indBox.innerHTML = fin.memberSummaries.map(s => {
       const listHtml = s.myItems.map(x => `<li>${x.name}: <strong>${x.qty} ${x.unitName}</strong> (${Math.round(x.cost)} دج)</li>`).join('');
@@ -864,46 +961,38 @@
     }).join('');
   }
 
-  // --- WHATSAPP EXPORT ---
   function copyMemberWhatsApp(memberId) {
     const fin = calculateFinancials();
     const s = fin.memberSummaries.find(x => x.member.id === memberId);
     if (!s) return;
     let txt = `🛒 *بطاقة فرز العولة المشتركة*
-`;
-    txt += `👤 العضو: *${s.member.name}*
-`;
-    txt += `------------------
+👤 العضو: *${s.member.name}*
+------------------
 `;
     s.myItems.forEach(i => {
       txt += `▪️ ${i.name}: *${i.qty} ${i.unitName}* (${Math.round(i.cost)} دج)
 `;
     });
     txt += `⛽ مصاريف مشتركة: ${s.expenseShare} دج
-`;
-    txt += `------------------
+------------------
 `;
     txt += `💰 الإجمالي: *${s.totalDue} دج*
-`;
-    txt += `💵 المدفوع مسبقاً: ${s.member.paid} دج
+💵 المدفوع مسبقاً: ${s.member.paid} دج
 `;
     txt += s.balance >= 0
       ? `✅ *الباقي لك (تسترجع): ${s.balance} دج*`
       : `⚠️ *الباقي عليك (تدفع): ${Math.abs(s.balance)} دج*`;
-
     navigator.clipboard.writeText(txt).then(() => alert('تم نسخ التقرير! الصقه مباشرة في واتساب.'));
   }
 
   function copyGroupWhatsApp() {
     const fin = calculateFinancials();
     let txt = `📊 *ملخص العولة المشتركة (شراء بالجملة)*
-`;
-    txt += `💰 إجمالي المشتريات: *${fin.grandTotal} دج*
+💰 إجمالي المشتريات: *${fin.grandTotal} دج*
 
+📦 *قائمة الفاردوات المطلوبة:*
 `;
-    txt += `📦 *قائمة الفاردوات المطلوبة:*
-`;
-    state.items.forEach(i => {
+    (state.items || []).forEach(i => {
       txt += `- ${i.name}: *${i._packsNeeded} فاردو* (${i._totalCost} دج)
 `;
     });
@@ -918,7 +1007,6 @@
     navigator.clipboard.writeText(txt).then(() => alert('تم نسخ التقرير العام للمجموعة!'));
   }
 
-  // --- BACKUP & RESET ---
   function exportData() {
     const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
@@ -936,23 +1024,21 @@
         state = JSON.parse(e.target.result);
         saveState();
         alert('تم استيراد البيانات بنجاح!');
-      } catch (err) {
-        alert('ملف غير صالح.');
-      }
+      } catch (err) { alert('ملف غير صالح.'); }
     };
     reader.readAsText(file);
   }
 
   function resetMonth() {
-    if (!confirm('هل أنت متأكد من تصفير جميع السلع والمصاريف لبدء شهر جديد؟ (سيتم الإبقاء على الأعضاء)')) return;
+    if (!confirm('هل أنت متأكد من تصفير جميع السلع والمصاريف لبدء شهر جديد؟')) return;
     state.items = [];
     state.expenses = [];
-    state.members.forEach(m => { m.paid = 0; });
+    (state.members || []).forEach(m => { m.paid = 0; });
     saveState();
   }
 
-  // Start
-  initLogin();
+  // Boot
+  connectGroup();
 </script>
 </body>
 </html>
