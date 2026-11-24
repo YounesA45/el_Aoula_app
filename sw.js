@@ -1,4 +1,4 @@
-const APP_VERSION = 'aloula-rtdb-v3.1.0';
+const APP_VERSION = 'aloula-rtdb-v4.0.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
